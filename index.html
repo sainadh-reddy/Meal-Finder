@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meal Finder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <header class="bg-orange-500 shadow-md sticky top-0 z-50 text-white">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center">
+
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-utensils text-xl"></i>
+                <h1 class="text-2xl font-bold">Meal Finder</h1>
+            </div>
+
+            <!-- Hamburger Menu -->
+            <nav>
+                <div class="relative">
+                    <button id="hamburgerBtn" class="text-2xl text-gray-700 focus:outline-none">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <ul id="categories" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md p-2 hidden">
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>
