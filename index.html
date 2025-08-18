@@ -12,9 +12,8 @@
 </head>
 
 <body class="bg-gray-50 text-gray-800">
-    <header class="bg-orange-500 shadow-md sticky top-0 z-50 text-white">
+    <header class="bg-orange-500 shadow-md top-0 z-50 text-white">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-
             <!-- Logo & Title -->
             <div class="flex items-center space-x-2">
                 <i class="fa-solid fa-utensils text-xl"></i>
@@ -28,8 +27,7 @@
                         <i class="fa-solid fa-bars"></i>
                     </button>
 
-                    <ul id="categories"
-                        class="absolute -right-4 -top-5 mt-2 w-64 bg-white shadow-lg p-2 hidden z-50">
+                    <ul id="categories" class="absolute -right-4 -top-5 mt-2 w-64 bg-white shadow-lg p-2 hidden z-50">
                         <!-- Menu content dynamically added via JavaScript -->
                     </ul>
                 </div>
@@ -52,6 +50,18 @@
             <div class="text-center mb-8">
                 <h2 class="text-4xl text-white font-bold mb-2">What are your favorite cuisines?</h2>
                 <p class="text-white text-lg my-3">PERSONALIZE YOUR EXPERIENCE</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="mealsAfterSearching" class="hidden">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <div class="mb-6">
+                <h2 class="text-xl font-bold mt-6 mb-1"> M E A L S </h2>
+                <hr id="underline" class="w-20 h-1 bg-orange-500" />
+            </div>
+            <div id="mealResult" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Meal items dynamically added via JavaScript -->
             </div>
         </div>
     </div>
