@@ -34,11 +34,19 @@ fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
     categoryList.appendChild(closeItem);
 
     categories.forEach((category) => {
-      // List item in dropdown
+      const categoryName = category.strCategory;
+      const categoryDescription = category.strCategoryDescription;
+
+      // Hamburger menu item
       const listItem = document.createElement("li");
       listItem.className =
         "block text-gray-700 text-s px-4 hover:bg-gray-100 cursor-pointer hover:text-orange-500";
-      listItem.textContent = category.strCategory;
+      listItem.textContent = categoryName;
+      listItem.addEventListener("click", () => {
+        categoryList.classList.add("hidden");
+        fetchMealsByCategory(categoryName,categoryDescription);
+      });
+
       const divider = document.createElement("hr");
       divider.className = "border-gray-300 my-1";
       categoryList.appendChild(listItem);
@@ -50,17 +58,21 @@ fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
         "bg-white shadow-lg relative text-center cursor-pointer";
       const thumbImage = document.createElement("img");
       thumbImage.src = category.strCategoryThumb;
-      thumbImage.alt = category.strCategory;
+      thumbImage.alt = categoryName;
       thumbImage.className = "w-full h-32 object-fit p-2";
 
       const thumbTitle = document.createElement("div");
-      thumbTitle.textContent = category.strCategory;
+      thumbTitle.textContent = categoryName;
       thumbTitle.className =
         "absolute py-1 px-2 text-sm text-white bg-orange-500 rounded top-0 right-0 m-1";
 
       categoryThumb.appendChild(thumbImage);
       categoryThumb.appendChild(thumbTitle);
       categoryThumbList.appendChild(categoryThumb);
+
+      categoryThumb.addEventListener("click", () => {
+        fetchMealsByCategory(categoryName,categoryDescription);
+      });
     });
   })
   .catch((error) => {
@@ -81,7 +93,9 @@ searchBtn.addEventListener("click", () => {
   }
 
   const mealsAfterSearching = document.getElementById("mealsAfterSearching");
+  const mealsByCategory = document.getElementById("mealsByCategory");
   mealsAfterSearching.classList.remove("hidden");
+  mealsByCategory.classList.add("hidden");
 
   fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${mealName}`)
     .then((response) => {
@@ -127,3 +141,58 @@ searchInput.addEventListener("keyup", (e) => {
     searchBtn.click();
   }
 });
+
+// Fetch meals by category and display
+function fetchMealsByCategory(categoryName,description) {
+  const categoryDesc = document.getElementById("categoryDescription");
+  const mealsList = document.getElementById("mealsList");
+  const mealsByCategory = document.getElementById("mealsByCategory");
+  const mealsAfterSearching = document.getElementById("mealsAfterSearching");
+
+  mealsAfterSearching.classList.add("hidden");
+  mealsByCategory.classList.remove("hidden");
+
+  // Clear previous
+  mealsList.innerHTML = "";
+  categoryDesc.innerHTML = "";
+
+  categoryDesc.innerHTML = `<div>
+    <h3 class="text-lg font-bold text-orange-600 mb-2">${categoryName}</h3>
+    <p class="text-gray-600 text-sm">${description}</p>
+  </div>`;
+
+  fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch category meals");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const meals = data.meals;
+
+      if (!meals || meals.length === 0) {
+        mealsList.innerHTML = `<p class="text-gray-600">No meals found for "${categoryName}".</p>`;
+        return;
+      }
+
+      meals.forEach((meal) => {
+        const mealCard = document.createElement("div");
+        mealCard.className =
+          "bg-white shadow-md rounded overflow-hidden hover:shadow-xl transition-shadow";
+
+        mealCard.innerHTML = `
+          <img src="${meal.strMealThumb}" alt="${meal.strMeal}" class="w-full h-40 object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-bold mb-2">${meal.strMeal}</h3>
+          </div>
+        `;
+
+        mealsList.appendChild(mealCard);
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching meals by category:", error);
+      mealsList.innerHTML = `<p class="text-red-500">Error fetching meals for "${categoryName}".</p>`;
+    });
+}
