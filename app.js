@@ -45,6 +45,7 @@ fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
       listItem.addEventListener("click", () => {
         categoryList.classList.add("hidden");
         fetchMealsByCategory(strCategory, strCategoryDescription);
+        window.scrollTo({ top: 408, behavior: "smooth" });
       });
       categoryList.appendChild(listItem);
       categoryList.appendChild(document.createElement("hr"));
@@ -60,7 +61,8 @@ fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
       categoryThumb.addEventListener("click", () =>{
         mealsAfterSearching.classList.add("hidden");
         mealdetails.classList.add("hidden");
-        fetchMealsByCategory(strCategory, strCategoryDescription)
+        fetchMealsByCategory(strCategory, strCategoryDescription);
+        window.scrollTo({ top: 408, behavior: "smooth" });
     });
       categoryThumbList.appendChild(categoryThumb);
     });
@@ -98,10 +100,12 @@ searchBtn.addEventListener("click", () => {
         `;
         mealCard.addEventListener("click", () => {
           showMealDetails(meal.idMeal);
+          window.scrollTo({ top: 408, behavior: "smooth" });
         });
         mealResult.appendChild(mealCard);
       });
     });
+    window.scrollTo({ top: 408, behavior: "smooth" });
 });
 
 // Enter key search
@@ -146,6 +150,7 @@ function fetchMealsByCategory(categoryName, description) {
         `;
         mealCard.addEventListener("click", () => {
           showMealDetails(meal.idMeal);
+          window.scrollTo({ top: 408, behavior: "smooth" });
         });
         mealsList.appendChild(mealCard);
       });
@@ -168,7 +173,7 @@ function showMealDetails(mealId) {
       const ingredientsContainer = document.getElementById("ingredents");
       ingredientsContainer.innerHTML = `
         <div class="flex-1">
-          <img src="${mealData.strMealThumb}" alt="${mealData.strMeal}" class="w-full md:w-96 rounded shadow-lg" />
+          <img src="${mealData.strMealThumb}" alt="${mealData.strMeal}" class="mt-6 w-full md:w-96 rounded shadow-lg" />
         </div>
         <div id="mealDetailsText" class="flex-1 flex-col p-4">
         <div class="flex-1 text-center md:text-left">
