@@ -40,7 +40,7 @@ fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
       // Menu item
       const listItem = document.createElement("li");
       listItem.className =
-        "block text-gray-700 text-s px-4 hover:bg-gray-100 cursor-pointer hover:text-orange-500";
+        "block text-gray-700 text-s px-4 py-1 hover:bg-gray-100 cursor-pointer hover:text-orange-500";
       listItem.textContent = strCategory;
       listItem.addEventListener("click", () => {
         categoryList.classList.add("hidden");
@@ -180,8 +180,22 @@ function showMealDetails(mealId) {
           <h2 class="text-3xl font-bold text-orange-600 mb-3">${mealData.strMeal}</h2>
           <p class="text-gray-700 my-1"><strong>Category:</strong> ${mealData.strCategory}</p>
           <p class="text-gray-700 my-1"><strong>Area:</strong> ${mealData.strArea}</p>
-          ${mealData.strTags ? `<p class="text-gray-700 my-1"><strong>Tags:</strong> ${mealData.strTags}</p>` : ""}
-          ${mealData.strSource ? `<p class="text-blue-600 mt-2"><a href="${mealData.strSource}" target="_blank" class="underline hover:text-blue-800">View Source</a></p>` : ""}
+          ${mealData.strTags 
+            ? `
+              <div class="my-2 flex items-center">
+                <strong class="text-gray-800">Tags:</strong>
+                <div class="flex space-x-2 flex-wrap mt-1 mx-1">
+                  ${mealData.strTags.split(',').map(tag => `
+                    <span class="text-orange-500 px-1 rounded text-sm font-medium border-2 border-orange-500">
+                      ${tag.trim()}
+                    </span>
+                  `).join('')}
+                </div>
+              </div>
+            `
+            : ""
+          }
+          ${mealData.strSource ? `<p class="text-blue-600 mt-2"><a href="${mealData.strSource}" target="_blank" class="underline hover:text-blue-800">Source</a></p>` : ""}
         </div>
         </div>
       `;
